@@ -4,7 +4,7 @@
 
 ## The problem
 
-In 20+ years of manufacturing engineering (Tesla, Thermo Fisher Scientific), I saw the same failure pattern over and over: an issue gets caught on the line, root-caused, and fixed — and six months later a different program hits the *same* issue, because the lesson lived in one engineer's head or a buried spreadsheet.
+In 20+ years of mechanical and manufacturing engineering (Tesla, Thermo Fisher Scientific), I saw the same failure pattern over and over: an issue gets caught on the line, root-caused, and fixed — and six months later a different program hits the *same* issue, because the lesson lived in one engineer's head or a buried spreadsheet.
 
 This project is a working prototype of the fix: index historical design review and failure records with machine learning, and **automatically surface similar past issues** whenever a new problem is described.
 
