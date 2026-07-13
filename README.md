@@ -2,6 +2,8 @@
 
 **AI-assisted retrieval of past engineering lessons — so design review knowledge stops dying in folders.**
 
+**🚀 Try it live:** https://design-review-miner.streamlit.app — no install needed. Describe a design issue, get similar past issues with root causes and resolutions, and compare the TF-IDF baseline against the hybrid BM25 + semantic engine side by side.
+
 ## The problem
 
 In 20+ years of mechanical and manufacturing engineering (Tesla, Thermo Fisher Scientific), I saw the same failure pattern over and over: an issue gets caught on the line, root-caused, and fixed — and six months later a different program hits the *same* issue, because the lesson lived in one engineer's head or a buried spreadsheet.
