@@ -4,7 +4,7 @@
 
 ## The problem
 
-In 20+ years of manufacturing engineering (Tesla, Thermo Fisher Scientific), I saw the same failure pattern over and over: an issue gets caught on the line, root-caused, and fixed — and six months later a different program hits the *same* issue, because the lesson lived in one engineer's head or a buried spreadsheet.
+In 20+ years of mechanical and manufacturing engineering (Tesla, Thermo Fisher Scientific), I saw the same failure pattern over and over: an issue gets caught on the line, root-caused, and fixed — and six months later a different program hits the *same* issue, because the lesson lived in one engineer's head or a buried spreadsheet.
 
 This project is a working prototype of the fix: index historical design review and failure records with machine learning, and **automatically surface similar past issues** whenever a new problem is described.
 
@@ -25,6 +25,20 @@ NEW ISSUE: Fasteners on skid plate corroding in coastal climate durability test
 ```
 
 A brand-new skid plate problem just inherited the lesson learned on a battery tray a year earlier. That is the entire point.
+
+## Hybrid retrieval (v2) — BM25 + semantic fusion
+
+`design_review_miner/hybrid_index.py` upgrades retrieval from single-method TF-IDF to a **hybrid engine**: Okapi BM25 (lexical — exact part numbers and error codes) runs in parallel with a semantic embedding channel (vocabulary mismatch — "joint loosening under vibration" finds "torque relaxation"), fused via **Reciprocal Rank Fusion (RRF)**. Every match reports *which channel found it and at what rank*, preserving the auditability engineers need.
+
+```python
+from design_review_miner.hybrid_index import HybridIndex
+
+index = HybridIndex.from_csv("data/design_review_records.csv")
+print(index.review("Bolts backing out during shaker table runs"))
+print(index.compare_to_v1("Bolts backing out during shaker table runs"))  # A/B vs v1
+```
+
+On the README example above, v1 TF-IDF ranks the truly relevant corrosion record (DR-007) *third*; the hybrid promotes it to **#1** because both channels agree on it. The embedding backend is pluggable: sentence-transformers when available, an offline LSA fallback (works air-gapped), or any callable for API embedders.
 
 ## Quick start
 
